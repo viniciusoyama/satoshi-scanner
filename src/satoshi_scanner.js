@@ -1,5 +1,6 @@
 import BitcoinClient from './bitcoin_client.js'
 import OrdinalsClient from './ordinals_client.js'
+import extractRareSatsRanges from './rare-sats/index.js'
 
 export async function findSatoshiRanges(addr) {
   const UTXOs = await BitcoinClient.scanUTXOSet(addr);
@@ -10,4 +11,15 @@ export async function findSatoshiRanges(addr) {
     data.satRanges = outputInfo.sat_ranges
     return data
   }))
+}
+
+
+export async function findRareSatoshis(addr) {
+  let transactionsData = await findSatoshiRanges(addr)
+
+  for (let txData of transactionsData) {
+    txData.rareSatsRanges = extractRareSatsRanges(txData.satRanges)
+  }
+
+  return transactionsData;
 }
