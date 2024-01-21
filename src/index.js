@@ -10,18 +10,13 @@ app.use(cors());
 const port = 3001
 
 app.get('/', (req, res) => {
-  findRareSatoshis(req.query.address).then(data => {
-    res.send({
-        message: data
-    })
-  });
-})
 
-let count = 0;
-app.get('/dumy', (req, res) => {
-    res.send({
-    message: `Dummy Endpoint ${count++}`
-    })
+  if(!req.query.address)
+    return res.send("Missing 'address' parameter on querystring")
+
+  findRareSatoshis(req.query.address).then(data => {
+    res.send(data)
+  });
 })
 
 app.listen(port, () => {

@@ -1,3 +1,5 @@
+// From https://github.com/SATO-Technologies/
+
 import { sortRangesWithIndices, rangeOverlapsRange, cloneRanges, rangesSize, minRepr } from "./utils/ranges.js"
 
 import {
